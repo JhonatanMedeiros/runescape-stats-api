@@ -1,7 +1,7 @@
 module.exports = {
     // Setting port for server
     'port': process.env.PORT || 5000,
-    'database': process.env.DATABASE_URL || {
+    'database': process.env.DATABASE_URL + '?ssl=true' || {
         host: 'localhost',
         port: 5432,
         user: 'runestats',
