@@ -2,6 +2,8 @@ const express = require('express');
 
 const pg = require('pg');
 
+var api = require('./lib');
+
 const config = require('./config/core/main');
 
 const app = express();
@@ -16,7 +18,18 @@ app.get('/', function(req, res) {
     res.send('hello world');
 });
 
+app.get('/:username', function(req, res){
+    api.osrs.hiscores.player(req.params.username).then(
+        logInfo
+    ).catch(
+        console.error
+    )
+});
 
+function logInfo(info){
+    console.log(info.skills);
+}
+/*
 client.connect(function(err) {
     if (err) {
         return console.error('could not connect to postgresql',err);
@@ -31,3 +44,4 @@ client.connect(function(err) {
 
     });
 });
+*/
