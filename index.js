@@ -1,14 +1,10 @@
 const express = require('express');
 
-const pg = require('pg');
-
-var api = require('./lib');
+var runeApi = require('runescape-api');
 
 const config = require('./config/core/main');
 
 const app = express();
-
-var client = new pg.Client(config.database);
 
 // Start the server
 const server = app.listen(config.port);
@@ -19,16 +15,18 @@ app.get('/', function(req, res) {
 });
 
 app.get('/:username', function(req, res){
-    api.osrs.hiscores.player(req.params.username).then(
-        logInfo
-    ).catch(
-        console.error
-    )
+    runeApi.osrs.hiscores.player(req.params.username).then( function (data) {
+        var skills = data.skills,
+            activities = data.activities;
+        console.log(data);
+        res.send(data);
+    })
+    .catch(function (error) {
+        console.error(error);
+        res.send(error)
+    });
 });
 
-function logInfo(info){
-    console.log(info.skills);
-}
 /*
 client.connect(function(err) {
     if (err) {
