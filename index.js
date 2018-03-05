@@ -4,10 +4,17 @@ var runeApi = require('runescape-api');
 
 const config = require('./config/core/main');
 
+const postgresql = require('pg');
+
+const updater = require('./updater');
+
 const app = express();
 
+var client = new postgresql.Client(config.database);
+client.connect();
 // Start the server
 const server = app.listen(config.port);
+
 console.log('Your server is running on port ' + config.port + '.');
 
 app.get('/', function(req, res) {
@@ -16,10 +23,11 @@ app.get('/', function(req, res) {
 
 app.get('/:username', function(req, res){
     runeApi.osrs.hiscores.player(req.params.username).then( function (data) {
-        var skills = data.skills,
-            activities = data.activities;
-        console.log(data);
-        res.send(data);
+        var skills = data.skills
+
+        console.log(data.skills);
+        updater(data, req.params.username, client);
+        res.send(data.skills);
     })
     .catch(function (error) {
         console.error(error);
