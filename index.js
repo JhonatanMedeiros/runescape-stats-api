@@ -9,14 +9,11 @@ const app = express();
 var con = new pg.Client(config.database);
 
 con.connect();
-
-con.end();
+con.query("CREATE TABLE TEST (id serial primary key, name varchar(255))");
 
 // Start the server
 const server = app.listen(config.port);
 console.log('Your server is running on port ' + config.port + '.');
-
-
 
 app.get('/', function(req, res) {
     res.send('hello world');
