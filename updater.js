@@ -25,7 +25,9 @@ function logInfo(info, username, connection) {
         + skills.agility.rank + ", " + skills.thieving.rank + ", " + skills.thieving.level + ", " + skills.thieving.exp + ", " + skills.slayer.rank + ", "
         + skills.slayer.level + ", " + skills.slayer.exp + ", " + skills.farming.rank + ", " + skills.farming.level + ", " + skills.farming.exp + ", "
         + skills.runecrafting.rank + ", " + skills.runecrafting.level + ", " + skills.runecrafting.exp + ", " + skills.hunter.rank + ", " + skills.hunter.level + ", "
-        + skills.hunter.exp + ", " + skills.construction.rank + ", " + skills.construction.level + ", " + skills.construction.exp + ")");
+        + skills.hunter.exp + ", " + skills.construction.rank + ", " + skills.construction.level + ", " + skills.construction.exp + ")", function(){
+        connection.end();
+        });
     
     console.log("Updating "+ username +"\'s tracker.");
 }

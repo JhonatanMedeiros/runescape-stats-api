@@ -10,8 +10,6 @@ const updater = require('./updater');
 
 const app = express();
 
-var client = new postgresql.Client(config.database);
-client.connect();
 // Start the server
 const server = app.listen(config.port);
 
@@ -22,6 +20,8 @@ app.get('/', function(req, res) {
 });
 
 app.get('/:username', function(req, res){
+    var client = new postgresql.Client(config.database);
+    client.connect();
     runeApi.osrs.hiscores.player(req.params.username).then( function (data) {
         var skills = data.skills
 
