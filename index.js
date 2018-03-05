@@ -1,10 +1,16 @@
 const express = require('express');
 
+const pg = require('pg');
+
 const config = require('./config/core/main');
 
 const app = express();
 
+var con = new pg.Client(config.database);
 
+con.connect();
+
+con.end();
 
 // Start the server
 const server = app.listen(config.port);
