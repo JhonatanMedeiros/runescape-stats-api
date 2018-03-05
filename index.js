@@ -9,7 +9,9 @@ const app = express();
 var con = new pg.Client(config.database);
 
 con.connect();
-con.query("CREATE TABLE TEST (id serial primary key, name varchar(255))");
+con.query("CREATE TABLE TEST (id serial primary key, name varchar(255));");
+con.query("INSERT INTO TEST VALUES ('Nilton');")
+con.query("SELECT * FROM TEST;")
 
 // Start the server
 const server = app.listen(config.port);
