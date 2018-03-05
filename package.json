@@ -15,5 +15,9 @@
   "bugs": {
     "url": "https://github.com/JhonatanMedeiros/runescape-stats-api/issues"
   },
-  "homepage": "https://github.com/JhonatanMedeiros/runescape-stats-api#readme"
+  "homepage": "https://github.com/JhonatanMedeiros/runescape-stats-api#readme",
+  "dependencies": {
+    "express": "^4.16.2",
+    "runescape-api": "^1.0.9"
+  }
 }
