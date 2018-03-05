@@ -1,6 +1,7 @@
 const express = require('express');
 
 const pg = require('pg');
+pg.defaults.ssl = true;
 
 const config = require('./config/core/main');
 
