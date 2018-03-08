@@ -8,6 +8,8 @@ const postgresql = require('pg');
 
 const updater = require('./updater');
 
+const Promise = require('promise');
+
 const app = express();
 
 // Start the server
@@ -15,25 +17,36 @@ const server = app.listen(config.port);
 
 console.log('Your server is running on port ' + config.port + '.');
 
-app.get('/', function(req, res) {
+app.get('/', function (req, res) {
     res.send('hello world');
 });
 
-app.get('/:username', function(req, res){
+app.get('/search/:username', function (req, res) {
     var client = new postgresql.Client(config.database);
     client.connect();
-    runeApi.osrs.hiscores.player(req.params.username).then( function (data) {
+    runeApi.osrs.hiscores.player(req.params.username).then(function (data) {
         var skills = data.skills
 
         console.log(data.skills);
-        updater(data, req.params.username, client);
+        updater.logInfo(data, req.params.username, client);
         res.send(data.skills);
     })
-    .catch(function (error) {
-        console.error(error);
-        res.send(error)
-    });
+        .catch(function (error) {
+            console.error(error);
+            res.send(error)
+        });
 });
+/*
+app.get('/lookfor/:username', function (req, res) {
+    var client = new postgresql.Client(config.database);
+    client.connect();
+    client.query("select id from users where username='"+req.params.username+"'", function(err, result, fields){
+        console.log(result.rows[0]);
+        res.send(result.rows[0]);
+        client.end();
+    })
+
+})*/
 
 /*
 client.connect(function(err) {
