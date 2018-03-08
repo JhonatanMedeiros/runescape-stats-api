@@ -25,12 +25,11 @@ function logInfo(info, username, connection) {
                 }
             })
         }else{
-            iduser = result.rows.id;
+            iduser = result.rows[0].id;
         }
 
         setTimeout(function () { // 1 second callback
-            if (flagNewStats = false || lastcheck.getDay() != new Date().getDay() || lastcheck.getMonth() != new Date().getMonth()) {
-
+            if (flagNewStats == false || lastcheck.getDay() != new Date().getDay() || lastcheck.getMonth() != new Date().getMonth()) {
                 connection.query("INSERT INTO stats (username, overallrank, overalllevel, overallxp, attackrank, attacklevel, attackxp, defencerank, defencelevel, defencexp, strengthrank, \
                     strengthlevel, strengthxp, hitpointsrank, hitpointslevel, hitpointsxp, rangedrank, rangedlevel, rangedxp, prayerrank, prayerlevel, prayerxp, magicrank, magiclevel, magicxp, \
                     cookingrank, cookinglevel, cookingxp, woodcuttingrank, woodcuttinglevel, woodcuttingxp, fletchingrank, fletchinglevel, fletchingxp, fishingrank, fishinglevel, fishingxp, \
@@ -56,7 +55,7 @@ function logInfo(info, username, connection) {
                     })
 
             } else {
-                
+
                 connection.query("update stats set overallrank='" + skills.overall.rank + "', overalllevel='" + skills.overall.level + "', overallxp='" + skills.overall.exp + "', \
                 attackrank='"+ skills.attack.rank + "', attacklevel='" + skills.attack.level + "', attackxp='" + skills.attack.exp + "', defencerank='" + skills.defence.rank + "', \
                 defencelevel='"+ skills.defence.level + "', defencexp='" + skills.defence.exp + "', strengthrank='" + skills.strength.rank + "', strengthlevel='" + skills.strength.level + "', \
