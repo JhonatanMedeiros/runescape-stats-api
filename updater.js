@@ -85,8 +85,15 @@ function logInfo(info, username) {
                             + skills.agility.exp + ", " + skills.thieving.rank + ", " + skills.thieving.level + ", " + skills.thieving.exp + ", " + skills.slayer.rank + ", "
                             + skills.slayer.level + ", " + skills.slayer.exp + ", " + skills.farming.rank + ", " + skills.farming.level + ", " + skills.farming.exp + ", "
                             + skills.runecrafting.rank + ", " + skills.runecrafting.level + ", " + skills.runecrafting.exp + ", " + skills.hunter.rank + ", " + skills.hunter.level + ", "
-                            + skills.hunter.exp + ", " + skills.construction.rank + ", " + skills.construction.level + ", " + skills.construction.exp + ")", function () {
+                            + skills.hunter.exp + ", " + skills.construction.rank + ", " + skills.construction.level + ", " + skills.construction.exp + ")", (err, result, fields) => {
                             console.log("Inserting " + username + "\'s into the tracker log.");
+
+                            if (err) {
+                                reject(err.stack);
+                            } else {
+                                resolve(result);
+                            }
+
                             client.end();
                         })
 
@@ -111,8 +118,13 @@ function logInfo(info, username) {
                 farmingrank='" + skills.farming.rank + "', farminglevel='" + skills.farming.level + "', farmingxp='" + skills.farming.exp + "', runecraftrank='" + skills.runecrafting.rank + "', \
                 runecraftlevel='" + skills.runecrafting.level + "', runecraftxp='" + skills.runecrafting.exp + "', hunterrank='" + skills.hunter.rank + "', \
                 hunterlevel='" + skills.hunter.level + "', hunterxp='" + skills.hunter.exp + "', constructionrank='" + skills.construction.rank + "', \
-                constructionlevel='" + skills.construction.level + "', constructionxp='" + skills.construction.exp + " checkdate=" + new Date() + "' WHERE username=" + iduser + ";", function () {
+                constructionlevel='" + skills.construction.level + "', constructionxp='" + skills.construction.exp + " checkdate=" + new Date() + "' WHERE username=" + iduser + ";", (err, result, fields) => {
                             console.log("Updating " + username + "\'s tracker log.");
+                            if (err) {
+                                reject(err.stack);
+                            } else {
+                                resolve(result);
+                            }
                             client.end();
                         })
                     }
