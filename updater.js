@@ -14,7 +14,7 @@ function logInfo(info, username) {
         var client = new postgresql.Client(config.database);
         client.connect((err) => {
             if (err) {
-                reject(err.stack)
+                reject(err.message)
 
             }
         });
@@ -25,14 +25,14 @@ function logInfo(info, username) {
             let flagNewStats = false;
 
             if (err) {
-                reject(err.stack)
+                reject(err.message)
             } else {
 
                 if (result == void (0)) {
                     client.query("select * from stats where username in (select id from users where username='" + username + "')", (err, result, fields) => {
 
                         if (err) {
-                            reject(err.stack)
+                            reject(err.message)
                         } else {
 
                             if (result.rows != void (0)) {
@@ -43,7 +43,7 @@ function logInfo(info, username) {
                                 client.query("select * from users where username='" + username + "'", (err, result, fields) => {
 
                                     if (err) {
-                                        reject(err.stack);
+                                        reject(err.message);
                                     } else {
                                         iduser = result.rows[0].id;
                                     }
@@ -89,7 +89,7 @@ function logInfo(info, username) {
                             console.log("Inserting " + username + "\'s into the tracker log.");
 
                             if (err) {
-                                reject(err.stack);
+                                reject(err.message);
                             } else {
                                 resolve(result);
                             }
@@ -121,7 +121,7 @@ function logInfo(info, username) {
                 constructionlevel='" + skills.construction.level + "', constructionxp='" + skills.construction.exp + " checkdate=" + new Date() + "' WHERE username=" + iduser + ";", (err, result, fields) => {
                             console.log("Updating " + username + "\'s tracker log.");
                             if (err) {
-                                reject(err.stack);
+                                reject(err.message);
                             } else {
                                 resolve(result);
                             }
@@ -143,7 +143,7 @@ function lookFor(username, connection) {
 
     connection.query("select id from users where username='" + username + "'", (err, res) => {
         if (err) {
-            console.log(err.stack)
+            console.log(err.message)
         } else {
             console.log(res.rows);
             return JSON.stringify(res.rows[0]);
