@@ -1,14 +1,7 @@
 const express = require('express');
-
-var runeApi = require('runescape-api');
-
 const config = require('./config/core/main');
 
-const postgresql = require('pg');
-
-const updater = require('./updater');
-
-const Promise = require('promise');
+const PlayerRouter = require('./routes/player.route');
 
 const app = express();
 
@@ -21,44 +14,5 @@ app.get('/', function (req, res) {
     res.send('hello world');
 });
 
-app.get('/search/:username', function (req, res) {
-    var client = new postgresql.Client(config.database);
-    client.connect();
-    runeApi.osrs.hiscores.player(req.params.username).then(function (data) {
-        var skills = data.skills
-        updater.logInfo(data, req.params.username, client);
-        res.send(data.skills);
-    })
-        .catch(function (error) {
-            console.error(error);
-            res.send(error)
-        });
-});
-/*
-app.get('/lookfor/:username', function (req, res) {
-    var client = new postgresql.Client(config.database);
-    client.connect();
-    client.query("select id from users where username='"+req.params.username+"'", function(err, result, fields){
-        console.log(result.rows[0]);
-        res.send(result.rows[0]);
-        client.end();
-    })
 
-})*/
-
-/*
-client.connect(function(err) {
-    if (err) {
-        return console.error('could not connect to postgresql',err);
-    }
-    var query = "CREATE TABLE TEST (id serial primary key, name varchar(255));";
-    client.query(query, function(err, result) {
-        if (err) {
-            return console.error("could not complete query", err);
-        }
-        client.end();
-        console.log(result);
-
-    });
-});
-*/
+app.use('/player', PlayerRouter);

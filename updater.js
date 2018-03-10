@@ -1,9 +1,5 @@
 'use strict';
 
-const config = require('./config/core/main');
-
-const pg = require('pg');
-
 function logInfo(info, username, connection) {
 
     var skills = info.skills;
@@ -14,7 +10,7 @@ function logInfo(info, username, connection) {
         let flagNewStats = false;
         if (result == void (0)) {
             connection.query("select * from stats where username in (select id from users where username='" + username + "')", function (err, result, fields) {
-                if(result.rows != ""){
+                if(result.rows != void (0)){
                     flagNewStats = true;
                     iduser = result.rows[0].username;
                     lastcheck = result.rows[0].checkdate;

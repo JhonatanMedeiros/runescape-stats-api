@@ -5,7 +5,7 @@ module.exports = {
         host: 'localhost',
         port: 5432,
         user: 'runestats',
-        password: '2018',
+        password: '12345678',
         database: 'RunescapeAPI'
     }
 
