@@ -12,7 +12,12 @@ function logInfo(info, username) {
     return new Promise((resolve, reject) => {
 
         var client = new postgresql.Client(config.database);
-        client.connect();
+        client.connect((err) => {
+            if (err) {
+                reject(err.stack)
+
+            }
+        });
 
         client.query("INSERT INTO users (username) VALUES('" + username + "') RETURNING id", function (err, result, fields) {
             let iduser = null;
@@ -20,14 +25,14 @@ function logInfo(info, username) {
             let flagNewStats = false;
 
             if (err) {
-                reject(err)
+                reject(err.stack)
             } else {
 
                 if (result == void (0)) {
                     client.query("select * from stats where username in (select id from users where username='" + username + "')", (err, result, fields) => {
 
                         if (err) {
-                            reject(err)
+                            reject(err.stack)
                         } else {
 
                             if (result.rows != void (0)) {
@@ -38,7 +43,7 @@ function logInfo(info, username) {
                                 client.query("select * from users where username='" + username + "'", (err, result, fields) => {
 
                                     if (err) {
-                                        reject(err);
+                                        reject(err.stack);
                                     } else {
                                         iduser = result.rows[0].id;
                                     }

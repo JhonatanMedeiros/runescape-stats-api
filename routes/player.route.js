@@ -16,9 +16,8 @@ router.get('/search/:username', (req, res) => {
                     res.send(data.skills);
                 })
                 .catch(error => {
-                    console.log(error);
                     res.status(500);
-                    res.send({'SQL Error:': error})
+                    res.send({'SQL Error:': error});
                 });
 
         })
