@@ -1,11 +1,14 @@
-CREATE TABLE users
+DROP TABLE public.users, public.stats;
+
+
+CREATE TABLE public.users
 (
     id serial primary key NOT NULL,
     username character varying(12) unique NOT NULL,
     last_search date NOT NULL DEFAULT CURRENT_DATE
-)
+);
 
-CREATE TABLE stats
+CREATE TABLE public.stats
 (
     id serial primary key NOT NULL,
     username integer references users(id) NOT NULL,
