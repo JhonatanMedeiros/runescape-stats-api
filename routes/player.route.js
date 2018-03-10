@@ -1,22 +1,28 @@
 const router = require('express').Router();
 const runeApi = require('runescape-api');
-const postgresql = require('pg');
-const Promise = require('promise');
 const updater = require('../updater');
 
-const config = require('../config/core/main');
 
+router.get('/search/:username', (req, res) => {
 
-router.get('/search/:username', function (req, res) {
-    var client = new postgresql.Client(config.database);
-    client.connect();
     runeApi.osrs.hiscores.player(req.params.username)
-        .then(function (data) {
+        .then((data) => {
+
             var skills = data.skills;
-            updater.logInfo(data, req.params.username, client);
-            res.send(data.skills);
+
+            updater.logInfo(data, req.params.username)
+                .then(data => {
+                    console.log(data);
+                    res.send(data.skills);
+                })
+                .catch(error => {
+                    console.log(error);
+                    res.status(500);
+                    res.send({'SQL Error:': error})
+                });
+
         })
-        .catch(function (error) {
+        .catch((error) => {
             console.error(error);
             res.send(error)
         });
