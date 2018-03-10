@@ -26,8 +26,6 @@ app.get('/search/:username', function (req, res) {
     client.connect();
     runeApi.osrs.hiscores.player(req.params.username).then(function (data) {
         var skills = data.skills
-
-        console.log(data.skills);
         updater.logInfo(data, req.params.username, client);
         res.send(data.skills);
     })

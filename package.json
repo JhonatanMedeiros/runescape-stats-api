@@ -21,6 +21,7 @@
   "dependencies": {
     "express": "^4.16.2",
     "pg": "7.4.1",
+    "promise": "^8.0.1",
     "runescape-api": "^1.0.9"
   }
 }
